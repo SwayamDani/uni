@@ -55,7 +55,7 @@ const Cards = () => {
         setUser(currentUser);
         fetchData();
       } else {
-        navigate('/unirides/login');
+        navigate('/login');
       }
     });
 
@@ -87,7 +87,7 @@ const Cards = () => {
     const name = user.displayName;
     if (item.ridees.includes(name)) {
       alert('You are already in the group.');
-      navigate(`/unirides/group/${item.id}`);
+      navigate(`/group/${item.id}`);
     } else if (item.seatsAvailable > 0) {
       try {
         const groupDoc = doc(db, 'groups', item.id);
@@ -97,7 +97,7 @@ const Cards = () => {
         });
         setButtonText('Joined Group');
         setButtonDisabled(true);
-        navigate(`/unirides/group/${item.id}`);
+        navigate(`/group/${item.id}`);
       } catch (error) {
         console.error('Error updating document: ', error);
       }
@@ -201,7 +201,7 @@ const Cards = () => {
         {sortedData.length === 0 ? (
           <div className="no-data">
             <p>No groups available. Create a new group?</p>
-            <button onClick={() => navigate('/unirides/create-group')}>
+            <button onClick={() => navigate('/create-group')}>
               Create Group
             </button>
           </div>

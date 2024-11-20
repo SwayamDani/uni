@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Profile from './components/Profile';
@@ -19,16 +19,16 @@ const App = () => {
       <Navbar />
       <div className="main-content">
         <Routes>
-          <Route path="/unirides" element={<Home />} />
-          <Route path="/unirides/learn-more" element={<LearnMore />} />
-          <Route path="/unirides/profile" element={<Profile />} />
-          <Route path="/unirides/cards" element={<Cards />} />
-          <Route path="/unirides/join-group" element={<Cards />} />{' '}
-          <Route path="/unirides/create-group" element={<CreateGroup />} />
-          <Route path="/unirides/login" element={<Login />} />{' '}
-          <Route path="/unirides/my-groups" element={<MyGroups />} />
-          <Route path="/unirides/group/:groupId" element={<GroupPage />} />
-          <Route path="/unirides/welcome" element={<LandingPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/learn-more" element={<LearnMore />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/cards" element={<Cards />} />
+          <Route path="/join-group" element={<Cards />} />{' '}
+          <Route path="/create-group" element={<CreateGroup />} />
+          <Route path="/login" element={<Login />} />{' '}
+          <Route path="/my-groups" element={<MyGroups />} />
+          <Route path="/group/:groupId" element={<GroupPage />} />
+          <Route path="/welcome" element={<LandingPage />} />
         </Routes>
       </div>
     </div>

@@ -7,22 +7,22 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
-    navigate('/unirides/login'); // Navigate to the login page when the profile icon is clicked
+    navigate('/login'); // Navigate to the login page when the profile icon is clicked
   };
 
   return (
     <nav className="navbar">
-      <Link to="/unirides" className="navbar__logo">
+      <Link to="/" className="navbar__logo">
         UniRides
       </Link>
       <div className="navbar__links">
-        <Link to="/unirides/join-group" className="navbar__link">
+        <Link to="/join-group" className="navbar__link">
           Join a Group
         </Link>
-        <Link to="/unirides/create-group" className="navbar__link">
+        <Link to="/create-group" className="navbar__link">
           Create Group
         </Link>
-        <Link to="/unirides/learn-more" className="navbar__link">
+        <Link to="/learn-more" className="navbar__link">
           About Us
         </Link>
         <div

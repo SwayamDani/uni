@@ -92,7 +92,7 @@ const GroupPage = () => {
         seatsAvailable: group.seatsAvailable + 1,
         ridees: arrayRemove(user.fullName),
       });
-      navigate('/unirides');
+      navigate('/');
     } catch (error) {
       console.error('Error leaving group: ', error);
     }
@@ -147,7 +147,7 @@ const GroupPage = () => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate('/unirides')}
+        onClick={() => navigate('/')}
       >
         Back to Groups
       </Button>

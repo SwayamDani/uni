@@ -22,7 +22,7 @@ const Login = () => {
         setUser(currentUser);
         const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
         if (userDoc.exists()) {
-          navigate('/unirides/profile'); // Redirect if user is already logged in
+          navigate('/profile'); // Redirect if user is already logged in
         } else {
           setIsNewUser(true);
         }
@@ -41,7 +41,7 @@ const Login = () => {
       const userDoc = await getDoc(doc(db, 'users', result.user.uid));
       if (userDoc.exists()) {
         setIsNewUser(false);
-        navigate('/unirides/welcome'); // Redirect if user exists
+        navigate('/welcome'); // Redirect if user exists
       } else {
         setIsNewUser(true);
       }
@@ -70,8 +70,8 @@ const Login = () => {
         photoURL: user.photoURL,
       });
       setIsNewUser(false);
-      // Redirect to /unirides/profile
-      navigate('/unirides/profile');
+      // Redirect to /profile
+      navigate('/profile');
     } catch (error) {
       console.error('Error saving user data:', error);
     }

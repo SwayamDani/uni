@@ -32,11 +32,11 @@ const Home = () => {
   }, []);
 
   const handleLearnMoreClick = () => {
-    navigate('/unirides/learn-more');
+    navigate('/learn-more');
   };
 
   const handleSignUpClick = () => {
-    navigate('/unirides/login');
+    navigate('/login');
   };
 
   return (

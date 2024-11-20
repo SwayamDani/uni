@@ -44,7 +44,7 @@ const CreateGroup = () => {
         }));
       }
     } else {
-      navigate('/unirides/login');
+      navigate('/login');
     }
   }, [user, navigate]);
 

@@ -51,7 +51,7 @@ const MyGroups = ({ handleButtonClick, buttonDisabled, buttonText }) => {
 
   handleButtonClick = (event, item) => {
     event.preventDefault();
-    navigate(`/unirides/group/${item.id}`);
+    navigate(`/group/${item.id}`);
   };
 
   if (loading) {

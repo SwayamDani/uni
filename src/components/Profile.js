@@ -41,7 +41,7 @@ const Profile = () => {
     try {
       await signOut(auth);
       setIsLoading(false);
-      navigate('/unirides');
+      navigate('/');
     } catch {
       setIsLoading(false);
       alert('Failed to log out. Please try again.');
@@ -49,7 +49,7 @@ const Profile = () => {
   };
 
   const handleMyGroupsClick = () => {
-    navigate('/unirides/my-groups');
+    navigate('/my-groups');
   };
 
   const handleEditProfileClick = () => {

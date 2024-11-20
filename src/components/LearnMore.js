@@ -6,7 +6,7 @@ const LearnMore = () => {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    navigate('/unirides/login');
+    navigate('/login');
   };
 
   return (
