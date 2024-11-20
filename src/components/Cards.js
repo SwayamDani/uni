@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,20 +29,7 @@ const Cards = () => {
   const cardWrapperRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        fetchData();
-      } else {
-        navigate('/unirides/login');
-      }
-    });
-
-    return () => unsubscribe();
-  }, [navigate]);
-
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     const groups = collection(db, 'groups');
     let q = groups;
@@ -60,7 +47,22 @@ const Cards = () => {
       })
       .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
-  };
+  },[ appliedFilter]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        fetchData();
+      } else {
+        navigate('/unirides/login');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate, fetchData]);
+
+
 
   const handleCardClick = async (item, index) => {
     if (flippedCardIndex === index) {

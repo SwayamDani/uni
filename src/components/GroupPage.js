@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
-import { useUser } from '@clerk/clerk-react';
 import { db } from '../firebase';
 import {
   Button,
@@ -14,8 +13,8 @@ import './GroupPage.css';
 import { useGoogleMaps } from './GoogleMapsContext';
 
 const GroupPage = () => {
-  const { user } = useUser();
   const { groupId } = useParams();
+  const [user] = useState(null);
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,26 +42,25 @@ const GroupPage = () => {
     fetchGroup();
   }, [groupId]);
 
-  useEffect(() => {
-    if (group && group.startPoint && group.destination) {
-      initMap(group.startPoint, group.destination);
-    }
-  }, [group]);
+  const calculateAndDisplayRoute = useCallback((
+    directionsService,
+    directionsRenderer,
+    startPoint,
+    destination
+  ) => {
+    directionsService
+      .route({
+        origin: startPoint,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      })
+      .then((response) => {
+        directionsRenderer.setDirections(response);
+      })
+      .catch((e) => window.alert('Directions request failed due to ' + e));
+  }, [google.maps.TravelMode.DRIVING ]);
 
-  const handleLeaveGroup = async () => {
-    try {
-      const groupDoc = doc(db, 'groups', groupId);
-      await updateDoc(groupDoc, {
-        seatsAvailable: group.seatsAvailable + 1,
-        ridees: arrayRemove(user.fullName),
-      });
-      navigate('/unirides');
-    } catch (error) {
-      console.error('Error leaving group: ', error);
-    }
-  };
-
-  const initMap = (startPoint, destination) => {
+  const initMap = useCallback((startPoint, destination) => {
     const directionsRenderer = new google.maps.DirectionsRenderer();
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById('map'), {
@@ -79,25 +77,30 @@ const GroupPage = () => {
       startPoint,
       destination
     );
+  }, [ google.maps, calculateAndDisplayRoute ]);
+
+  useEffect(() => {
+    if (group && group.startPoint && group.destination) {
+      initMap(group.startPoint, group.destination);
+    }
+  }, [group, initMap]);
+
+  const handleLeaveGroup = async () => {
+    try {
+      const groupDoc = doc(db, 'groups', groupId);
+      await updateDoc(groupDoc, {
+        seatsAvailable: group.seatsAvailable + 1,
+        ridees: arrayRemove(user.fullName),
+      });
+      navigate('/unirides');
+    } catch (error) {
+      console.error('Error leaving group: ', error);
+    }
   };
 
-  const calculateAndDisplayRoute = (
-    directionsService,
-    directionsRenderer,
-    startPoint,
-    destination
-  ) => {
-    directionsService
-      .route({
-        origin: startPoint,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING,
-      })
-      .then((response) => {
-        directionsRenderer.setDirections(response);
-      })
-      .catch((e) => window.alert('Directions request failed due to ' + e));
-  };
+  
+
+  
 
   if (loading) {
     return (

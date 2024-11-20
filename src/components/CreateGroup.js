@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser, useAuth } from '@clerk/clerk-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CreateGroup.css';
 import CustomStandaloneSearchBox from './CustomStandaloneSearchBox';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
+
 
 const CreateGroup = () => {
-  const { user } = useUser();
-  const { isSignedIn } = useAuth();
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
     groupType: '',
     startPoint: '',
@@ -22,8 +22,21 @@ const CreateGroup = () => {
   });
   const navigate = useNavigate();
 
+  const fetchUserData = async () => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      
+      const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUser(userData);
+      }
+    }
+  };
+
   useEffect(() => {
-    if (isSignedIn) {
+    fetchUserData();
+    if (user) {
       if (user) {
         setFormData((prevFormData) => ({
           ...prevFormData,
@@ -33,7 +46,7 @@ const CreateGroup = () => {
     } else {
       navigate('/unirides/login');
     }
-  }, [user, isSignedIn, navigate]);
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
