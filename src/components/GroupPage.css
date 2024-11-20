@@ -1,0 +1,135 @@
+
+
+.group-page {
+  margin-top: 3vh;
+  padding: 5rem;
+  /*background-color: #ffffff;*/
+  border-radius: 12px;
+  /*box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);*/
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#content {
+  height: 500px;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+#map {
+  height: 300px;
+  flex: 2;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#sidebar {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.typography {
+  margin-bottom: 1.5rem;
+}
+
+.group-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.group-details h4 {
+  font-size: 1.75rem;
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+.group-details p {
+  font-size: 1rem;
+  color: #555555;
+  display: flex;
+  align-items: center;
+}
+
+.group-details p svg {
+  margin-right: 0.5rem;
+  color: #007bff;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  margin-top: 1rem;
+  margin-right: 10px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button.primary {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+}
+
+button.secondary {
+  background-color: #dc3545;
+  color: #ffffff;
+  border: none;
+}
+
+button.primary:hover,
+button.secondary:hover {
+  background-color: darken(#007bff, 10%);
+  transform: scale(1.05);
+}
+
+@media screen and (min-width: 768px) {
+  #content {
+    flex-direction: row;
+  }
+
+  #map {
+    height: 400px;
+  }
+
+  #sidebar {
+    height: 450px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #content {
+    flex-direction: column;
+  }
+
+  #map,
+  #sidebar {
+    width: 100%;
+    height: 40vh;
+  }
+}

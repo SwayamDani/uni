@@ -1,0 +1,287 @@
+/* src/components/LearnMore.css */
+
+
+
+/* Hero Section */
+.hero {
+    background: url('../assets/hero-learn-more.webp') center center / cover no-repeat;    color: #fff;
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-top: 20px;
+}
+
+.cta-button {
+    background-color: #0056b3; /* Darker shade for better contrast */
+    color: #fff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px; /* Rounded button */
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s; /* Added box-shadow for interaction effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.cta-button:hover {
+    background-color: #004494; /* Darker on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+/* Content Section */
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-description {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+/* Features Section */
+.features-section {
+    margin-top: 40px;
+}
+
+.feature-item {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feature-item:hover {
+    transform: scale(1.05); /* Slight scale-up effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-item h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.feature-item p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* How It Works Section */
+.how-it-works {
+    background-color: #e9f5ff; /* Softer blue background for better contrast */
+    padding: 60px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added a box shadow */
+}
+
+
+
+.step-item {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 20px;
+}
+
+.step-item:hover {
+    transform: scale(1.05); /* Slight scale-up effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.step-number {
+    background: #007bff;
+    color: #fff;
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.step-item h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.step-item p {
+    font-size: 1rem;
+    color: #555;}
+
+/* Why Choose UniRides Section */
+.why-choose-section {
+    background-color: #ffffff;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.reasons-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.reasons-list li {
+    background: #f9f9f9;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 600px;
+    width: 100%;
+}
+
+.reasons-list li strong {
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .reasons-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+.reasons-list li {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.reasons-list li strong {
+    color: #007bff;
+}
+
+/* Call to Action Section */
+.cta-section {
+    background: #007bff;
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    margin-top: 40px;
+    border-radius: 10px;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.cta-section p {
+    font-size: 1.25rem;
+    margin-top: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-section button {
+    background-color: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section button:hover {
+    background-color: #004494;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+
+    .cta-section p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 0.875rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.75rem;
+    }
+}

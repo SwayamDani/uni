@@ -1,0 +1,97 @@
+/* src/components/CreateGroup.css */
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding-top: 50px;
+}
+
+.create-group-form {
+  background-color: #ffffff;
+  width: 600px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.create-group-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.create-group-form .form-group {
+  margin-bottom: 20px;
+}
+
+.create-group-form .form-label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: block;
+  color: #555;
+}
+
+.create-group-form .form-control {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.create-group-form .form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.create-group-form .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.create-group-form .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #004085;
+}
+
+@media (max-width: 768px) {
+  .create-group-form {
+    padding: 20px;
+  }
+
+  .create-group-form h2 {
+    font-size: 20px;
+  }
+
+  .create-group-form .form-control {
+    font-size: 14px;
+  }
+
+  .create-group-form .btn-primary {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-group-form {
+    padding: 15px;
+  }
+
+  .create-group-form h2 {
+    font-size: 18px;
+  }
+
+  .create-group-form .form-control {
+    font-size: 12px;
+  }
+
+  .create-group-form .btn-primary {
+    font-size: 12px;
+  }
+}

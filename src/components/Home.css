@@ -1,0 +1,168 @@
+/* General Styling */
+body {
+  font-family: 'Arial, sans-serif';
+  scroll-behavior: smooth;
+  color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+  background: url('../assets/hero-home.webp') center center / cover no-repeat;
+  height: 70vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.hero-content h1 {
+  color: #fff;
+}
+
+.hero-btn {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.hero-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Information Blocks Section */
+.info-blocks {
+  display: flex;
+  justify-content: space-around;
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+}
+
+.info-block {
+  text-align: center;
+  max-width: 300px;
+}
+
+.info-block img {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+
+.info-block h3 {
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+/* News Section */
+.news-section {
+  padding: 4rem 2rem;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.news-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+}
+
+.news-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.news-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 300px;
+  transition: transform 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-10px);
+}
+
+.news-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.news-card h4 {
+  margin: 1rem;
+}
+
+.news-card p {
+  padding: 0 1rem 1rem 1rem;
+}
+
+/* Call to Action Section */
+.cta-section {
+  background: #007bff;
+  color: #fff;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.cta-section button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cta-section button:hover {
+  background-color: #004080;
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.5s forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
