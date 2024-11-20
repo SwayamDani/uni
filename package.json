@@ -29,7 +29,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "dir build && serve -s build",
     "lint": "eslint src",
     "format": "prettier --write ."
   },
