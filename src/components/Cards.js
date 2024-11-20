@@ -144,9 +144,6 @@ const Cards = () => {
   return (
     <div className="groups-container">
       <div className='cards' id="cards">
-        <button className={`scroll-left ${showFilter ? 'shifted' : ''}`} id="scroll-button" onClick={scrollLeft}>
-          &lt;
-        </button>
         <div className="filter-icon" onClick={toggleFilter}>
           <FontAwesomeIcon icon={faFilter} size="2x" />
         </div>
@@ -154,31 +151,31 @@ const Cards = () => {
           <div className="filter-sort-container">
             <div className="filter-box">
               <div className="filter">
-                <label>Filter by destination:</label>
+                <div>Filter:</div>
                 <div>
                   <label>
-                    <input type="checkbox" value="groceries"/>
                     Groceries
+                    <input type="checkbox" value="groceries"/>
                   </label>
                   <label>
-                    <input type="checkbox" value="airport"/>
                     Airport
+                    <input type="checkbox" value="airport"/>
                   </label>
                   <label>
-                    <input type="checkbox" value="metro"/>
                     Metro/BART
+                    <input type="checkbox" value="metro"/>
                   </label>
                   <label>
-                    <input type="checkbox" value="home"/>
                     Home
+                    <input type="checkbox" value="home"/>
                   </label>
                   <label>
-                    <input type="checkbox" value="on_campus"/>
                     On Campus
+                    <input type="checkbox" value="on_campus"/>
                   </label>
                   <label>
-                    <input type="checkbox" value="other"/>
                     Other
+                    <input type="checkbox" value="other"/>
                   </label>
                 </div>
                 <button onClick={applyFilter}>Apply Filter</button>
@@ -215,39 +212,15 @@ const Cards = () => {
                       <p>Date: {item.date ? new Date(item.date).toLocaleDateString() : 'Unknown'}</p>
                       <p>Time: {item.startTime || 'Unknown'}</p>
                     </div>
-                    <div className="flip-icon">
-                      <FontAwesomeIcon icon={faSyncAlt}/>
+                    <div className="card-footer">
+                      <button onClick={(event) => handleButtonClick(event, item)} disabled={buttonDisabled}>
+                        {buttonText}
+                      </button>
                     </div>
-                  </div>
-                  <div className="card-back">
-                    {flippedCardIndex === index && item.coordinates && (
-                      <div className="modal-content" onClick={handleMapClick}>
-                        <div className="modal-header">
-                          {item.destination}
-                        </div>
-                        <div className="modal-body">
-                          <GoogleMap
-                            mapContainerStyle={{width: '100%', height: '100%'}}
-                            center={item.coordinates}
-                            zoom={15}
-                          >
-                            <Marker position={item.coordinates}/>
-                          </GoogleMap>
-                        </div>
-                        <div className="modal-footer">
-                          <button onClick={(event) => handleButtonClick(event, item)} disabled={buttonDisabled}>
-                            {buttonText}
-                          </button>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
             </div>
-            <button className="scroll-right" id="scroll-button" onClick={scrollRight}>
-              &gt;
-            </button>
           </div>
         )}
       </div>

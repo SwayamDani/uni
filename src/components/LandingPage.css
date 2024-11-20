@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100VH;
-    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    background: #fff;
     background-size: 400% 400%;
     animation: gradientAnimation 15s ease infinite;
     text-align: center;
@@ -61,7 +61,7 @@
     background-color: #fff;
     padding: 3rem;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     margin: 30px 0;
     max-width: 700px;
     width: 90%;
@@ -96,7 +96,7 @@
     background-color: #fff;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     text-align: left;
@@ -104,7 +104,7 @@
 
 .action-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .action-icon {
