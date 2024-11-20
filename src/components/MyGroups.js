@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Import the Firestore instance directly
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 import './Cards.css'; // Reuse the same CSS

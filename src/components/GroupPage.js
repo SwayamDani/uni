@@ -19,8 +19,6 @@ const GroupPage = () => {
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [distance, setDistance] = useState('');
-  const [duration, setDuration] = useState('');
   const navigate = useNavigate();
   const google = useGoogleMaps();
 
@@ -97,9 +95,6 @@ const GroupPage = () => {
       })
       .then((response) => {
         directionsRenderer.setDirections(response);
-        const route = response.routes[0].legs[0];
-        setDistance(route.distance.text);
-        setDuration(route.duration.text);
       })
       .catch((e) => window.alert('Directions request failed due to ' + e));
   };

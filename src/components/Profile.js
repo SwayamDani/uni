@@ -57,8 +57,6 @@ const Profile = () => {
   };
 
   const handleSaveProfile = async () => {
-    const [firstName, lastName] = fullName.split(' ');
-
     try {
       await setDoc(doc(db, 'users', user.uid), {
         name: fullName,

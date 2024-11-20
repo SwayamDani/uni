@@ -7,7 +7,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import './LandingPage.css';
 
 const LandingPage = () => {
-  const [user, setUser] = useState(null);
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ const LandingPage = () => {
       try {
         const currentUser = auth.currentUser;
         if (currentUser) {
-          setUser(currentUser);
           const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();

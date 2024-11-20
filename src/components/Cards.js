@@ -1,13 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSpinner,
-  faSyncAlt,
-  faFilter,
-} from '@fortawesome/free-solid-svg-icons';
-import { GoogleMap, Marker } from '@react-google-maps/api';
+import { faSpinner, faFilter } from '@fortawesome/free-solid-svg-icons';
 import {
   collection,
   getDocs,
@@ -17,7 +12,7 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { auth, googleProvider, db } from '../firebase';
+import { auth, db } from '../firebase';
 import './Cards.css';
 
 const Cards = () => {
@@ -26,7 +21,6 @@ const Cards = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [flippedCardIndex, setFlippedCardIndex] = useState(null);
-  const [filter, setFilter] = useState([]);
   const [appliedFilter, setAppliedFilter] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [showFilter, setShowFilter] = useState(false);
@@ -86,10 +80,6 @@ const Cards = () => {
     }
   };
 
-  const handleMapClick = (event) => {
-    event.stopPropagation();
-  };
-
   const handleButtonClick = async (event, item) => {
     event.stopPropagation();
     const name = user.displayName;
@@ -113,14 +103,6 @@ const Cards = () => {
       setButtonText('Group Full');
       setButtonDisabled(true);
     }
-  };
-
-  const scrollLeft = () => {
-    cardWrapperRef.current.scrollBy({ left: -600, behavior: 'smooth' });
-  };
-
-  const scrollRight = () => {
-    cardWrapperRef.current.scrollBy({ left: 600, behavior: 'smooth' });
   };
 
   const toggleFilter = () => {

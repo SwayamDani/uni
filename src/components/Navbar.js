@@ -22,7 +22,7 @@ const Navbar = () => {
         <Link to="/unirides/create-group" className="navbar__link">
           Create Group
         </Link>
-        <Link to="/unirides/about-us" className="navbar__link">
+        <Link to="/unirides/learn-more" className="navbar__link">
           About Us
         </Link>
         <div

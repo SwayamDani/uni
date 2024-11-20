@@ -4,16 +4,12 @@ import { useUser, useAuth } from '@clerk/clerk-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CreateGroup.css';
 import CustomStandaloneSearchBox from './CustomStandaloneSearchBox';
-import { useGoogleMaps } from './GoogleMapsContext';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import ConfettiExplosion from 'react-confetti-explosion';
 
 const CreateGroup = () => {
   const { user } = useUser();
   const { isSignedIn } = useAuth();
-  const google = useGoogleMaps();
-  const [isExploding, setIsExploding] = React.useState(false);
   const [formData, setFormData] = useState({
     groupType: '',
     startPoint: '',
