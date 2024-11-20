@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { db, auth } from '../firebase';
-import Chat from '../components/chat';
+import CardChat from '../components/chat';
 import {
   Button,
   CircularProgress,
   Container,
   Typography,
   Alert,
+  Snackbar,
 } from '@mui/material';
 import './GroupPage.css';
 import { useGoogleMaps } from './GoogleMapsContext';
@@ -19,6 +20,8 @@ const GroupPage = () => {
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
   const navigate = useNavigate();
   const google = useGoogleMaps();
 
@@ -51,30 +54,29 @@ const GroupPage = () => {
     fetchGroup();
   }, [groupId]);
 
-  const calculateAndDisplayRoute = useCallback((
-    directionsService,
-    directionsRenderer,
-    startPoint,
-    destination
-  ) => {
-    directionsService
-      .route({
-        origin: startPoint,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING,
-      })
-      .then((response) => {
-        directionsRenderer.setDirections(response);
-      })
-      .catch((e) => window.alert('Directions request failed due to ' + e));
-  }, [google.maps.TravelMode.DRIVING ]);
+  const calculateAndDisplayRoute = useCallback(
+    (directionsService, directionsRenderer, startPoint, destination) => {
+      directionsService
+        .route({
+          origin: startPoint,
+          destination: destination,
+          travelMode: google.maps.TravelMode.DRIVING,
+        })
+        .then((response) => {
+          directionsRenderer.setDirections(response);
+        })
+        .catch((e) => window.alert('Directions request failed due to ' + e));
+    },
+    [google.maps.TravelMode.DRIVING]
+  );
 
   const initMap = useCallback((startPoint, destination) => {
     const directionsRenderer = new google.maps.DirectionsRenderer();
     const directionsService = new google.maps.DirectionsService();
     const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
-      disableDefaultUI: true,
+      disableDefaultUI: false, // Enable default UI for better navigation
+      zoomControl: true,
     });
 
     directionsRenderer.setMap(map);
@@ -86,7 +88,7 @@ const GroupPage = () => {
       startPoint,
       destination
     );
-  }, [ google.maps, calculateAndDisplayRoute ]);
+  }, [google.maps, calculateAndDisplayRoute]);
 
   useEffect(() => {
     if (group && group.startPoint && group.destination) {
@@ -101,16 +103,21 @@ const GroupPage = () => {
         seatsAvailable: group.seatsAvailable + 1,
         ridees: arrayRemove(user.fullName),
       });
+      setFeedback('You have successfully left the group.');
       navigate('/');
     } catch (error) {
       console.error('Error leaving group: ', error);
+      setFeedback('An error occurred while leaving the group.');
     }
   };
 
   if (loading) {
     return (
       <Container className="loading-container">
-        <CircularProgress />
+        <CircularProgress color="primary" />
+        <Typography variant="body1" style={{ marginTop: '1rem', color: '#007bff' }}>
+          Please wait while we load the group details...
+        </Typography>
       </Container>
     );
   }
@@ -133,6 +140,14 @@ const GroupPage = () => {
 
   return (
     <Container className="group-page">
+      {feedback && (
+        <Snackbar
+          open={Boolean(feedback)}
+          autoHideDuration={6000}
+          message={feedback}
+          onClose={() => setFeedback(null)}
+        />
+      )}
       <div id="content">
         <div id="map" style={{width: '100%', margin: '1rem 0'}}></div>
         <div id="sidebar"></div>
@@ -149,19 +164,35 @@ const GroupPage = () => {
       <Typography variant="body1">
         Seats Available: {group.seatsAvailable}
       </Typography>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate('/')}
-      >
-        Back to Groups
-      </Button>
-      <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
-        Leave Group
-      </Button>
-      <div className="App">
-        {user ? <Chat user={user} groupId={groupId}/> : <p>Please log in to chat.</p>}
+      <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate('/')}
+        >
+          Back to Groups
+        </Button>
+        <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
+          Leave Group
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setChatOpen(!chatOpen)}
+        >
+          {chatOpen ? 'Hide Chat' : 'Show Chat'}
+        </Button>
       </div>
+      
+      {chatOpen && (
+        <div className="chat-container">
+          {user ? (
+            <CardChat user={user} groupId={groupId} className={"chat"} />
+          ) : (
+            <p>Please log in to chat.</p>
+          )}
+        </div>
+      )}
     </Container>
   );
 };
