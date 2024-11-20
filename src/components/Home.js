@@ -37,7 +37,7 @@ const Home = () => {
 
   const handleSignUpClick = () => {
     navigate('/unirides/login');
-  }
+  };
 
   return (
     <div>
@@ -46,7 +46,9 @@ const Home = () => {
         <div className="hero-content">
           <h1>Welcome to UniRides!</h1>
           <p>Your Go-To Ride Sharing Solution for Students</p>
-          <button className="hero-btn" onClick={handleLearnMoreClick}>Learn More</button>
+          <button className="hero-btn" onClick={handleLearnMoreClick}>
+            Learn More
+          </button>
         </div>
       </div>
 
@@ -77,7 +79,9 @@ const Home = () => {
           </div>
           <div className="news-card">
             <h4>New Ride-Sharing Features</h4>
-            <p>Discover our latest ride-sharing updates for better experiences.</p>
+            <p>
+              Discover our latest ride-sharing updates for better experiences.
+            </p>
             <button>Read More</button>
           </div>
         </div>
@@ -86,7 +90,10 @@ const Home = () => {
       {/* Call to Action Section */}
       <div className="cta-section">
         <h2>Get Involved</h2>
-        <p>Support our mission to make transportation accessible and sustainable for students everywhere.</p>
+        <p>
+          Support our mission to make transportation accessible and sustainable
+          for students everywhere.
+        </p>
         <button onClick={handleSignUpClick}>Join Us Today</button>
       </div>
     </div>

@@ -31,7 +31,8 @@
   gap: 20px;
 }
 
-.filter label, .sort label {
+.filter label,
+.sort label {
   font-weight: bold;
   margin-bottom: 5px;
 }
@@ -70,7 +71,9 @@
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   cursor: pointer;
 }
 

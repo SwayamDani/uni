@@ -34,7 +34,9 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .navbar__link:hover {
@@ -51,7 +53,9 @@
   border-radius: 50%;
   background-color: #f1f1f1;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s;
 }
 
 .navbar__profile:hover {

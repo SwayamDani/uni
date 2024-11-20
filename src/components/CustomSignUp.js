@@ -10,7 +10,12 @@ const CustomSignUp = () => {
         <Navigate to="/unirides/profile" />
       </SignedIn>
       <SignedOut>
-        <SignUp path="/unirides/signup" routing="path" signInUrl="/unirides/login" className="custom-signup" />
+        <SignUp
+          path="/unirides/signup"
+          routing="path"
+          signInUrl="/unirides/login"
+          className="custom-signup"
+        />
       </SignedOut>
     </div>
   );

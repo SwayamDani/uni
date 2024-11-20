@@ -65,7 +65,7 @@ const Profile = () => {
         email: email,
         mobile: phone,
         university: university,
-        photoURL: photoURL
+        photoURL: photoURL,
       });
       setIsEditing(false);
       alert('Profile updated successfully!');
@@ -83,7 +83,9 @@ const Profile = () => {
     if (!phoneNumber) return 'Not Available';
     const cleanedNumber = phoneNumber.replace(/[^\d]/g, '');
     const match = cleanedNumber.match(/^(\d{2})(\d{3})(\d{3})(\d{4})$/);
-    return match ? `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}` : phoneNumber;
+    return match
+      ? `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}`
+      : phoneNumber;
   };
 
   return (
@@ -92,7 +94,10 @@ const Profile = () => {
         {photoURL ? (
           <img src={photoURL} alt="Profile" className="profile-picture" />
         ) : (
-          <i className="fas fa-user-circle profile-picture" aria-hidden="true"></i>
+          <i
+            className="fas fa-user-circle profile-picture"
+            aria-hidden="true"
+          ></i>
         )}
         <div className="profile-info">
           {isEditing ? (
@@ -112,22 +117,44 @@ const Profile = () => {
       <div className="profile-details-buttons">
         {isEditing ? (
           <div className="edit-buttons">
-            <button type="button" className="btn btn-save" onClick={handleSaveProfile}>
+            <button
+              type="button"
+              className="btn btn-save"
+              onClick={handleSaveProfile}
+            >
               Save Changes
             </button>
-            <button type="button" className="btn btn-cancel" onClick={handleCancelEdit}>
+            <button
+              type="button"
+              className="btn btn-cancel"
+              onClick={handleCancelEdit}
+            >
               Cancel
             </button>
           </div>
         ) : (
           <>
-            <button type="button" className="btn my-groups-button" onClick={handleMyGroupsClick}>
+            <button
+              type="button"
+              className="btn my-groups-button"
+              onClick={handleMyGroupsClick}
+            >
               My Groups
             </button>
-            <button type="button" className="btn edit-profile-button" onClick={handleEditProfileClick}>
+            <button
+              type="button"
+              className="btn edit-profile-button"
+              onClick={handleEditProfileClick}
+            >
               Edit Profile
             </button>
-            <button type="button" className="btn logout-button" id="logout-btn" onClick={handleLogout} disabled={isLoading}>
+            <button
+              type="button"
+              className="btn logout-button"
+              id="logout-btn"
+              onClick={handleLogout}
+              disabled={isLoading}
+            >
               {isLoading ? 'Logging Out...' : 'Logout'}
             </button>
           </>
@@ -163,9 +190,15 @@ const Profile = () => {
           </div>
         ) : (
           <div className="view-contact-info">
-            <p><strong>Email:</strong> {email}</p>
-            <p><strong>Phone:</strong> {formatPhoneNumber(phone)}</p>
-            <p><strong>University:</strong> {university}</p>
+            <p>
+              <strong>Email:</strong> {email}
+            </p>
+            <p>
+              <strong>Phone:</strong> {formatPhoneNumber(phone)}
+            </p>
+            <p>
+              <strong>University:</strong> {university}
+            </p>
           </div>
         )}
       </div>

@@ -3,7 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { useUser } from '@clerk/clerk-react';
 import { db } from '../firebase';
-import { Button, CircularProgress, Container, Typography, Alert } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Typography,
+  Alert,
+} from '@mui/material';
 import './GroupPage.css';
 import { useGoogleMaps } from './GoogleMapsContext';
 
@@ -50,29 +56,39 @@ const GroupPage = () => {
       const groupDoc = doc(db, 'groups', groupId);
       await updateDoc(groupDoc, {
         seatsAvailable: group.seatsAvailable + 1,
-        ridees: arrayRemove(user.fullName)
+        ridees: arrayRemove(user.fullName),
       });
       navigate('/unirides');
     } catch (error) {
-      console.error("Error leaving group: ", error);
+      console.error('Error leaving group: ', error);
     }
   };
 
   const initMap = (startPoint, destination) => {
     const directionsRenderer = new google.maps.DirectionsRenderer();
     const directionsService = new google.maps.DirectionsService();
-    const map = new google.maps.Map(document.getElementById("map"), {
+    const map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
       disableDefaultUI: true,
     });
 
     directionsRenderer.setMap(map);
-    directionsRenderer.setPanel(document.getElementById("sidebar"));
+    directionsRenderer.setPanel(document.getElementById('sidebar'));
 
-    calculateAndDisplayRoute(directionsService, directionsRenderer, startPoint, destination);
+    calculateAndDisplayRoute(
+      directionsService,
+      directionsRenderer,
+      startPoint,
+      destination
+    );
   };
 
-  const calculateAndDisplayRoute = (directionsService, directionsRenderer, startPoint, destination) => {
+  const calculateAndDisplayRoute = (
+    directionsService,
+    directionsRenderer,
+    startPoint,
+    destination
+  ) => {
     directionsService
       .route({
         origin: startPoint,
@@ -85,7 +101,7 @@ const GroupPage = () => {
         setDistance(route.distance.text);
         setDuration(route.duration.text);
       })
-      .catch((e) => window.alert("Directions request failed due to " + e));
+      .catch((e) => window.alert('Directions request failed due to ' + e));
   };
 
   if (loading) {
@@ -115,17 +131,31 @@ const GroupPage = () => {
   return (
     <Container className="group-page">
       <div id="content">
-      <div id="map" style={{ width: '100%', margin: '1rem 0' }}></div>
-      <div id="sidebar"></div>
+        <div id="map" style={{ width: '100%', margin: '1rem 0' }}></div>
+        <div id="sidebar"></div>
       </div>
-      <Typography variant="h4" component="h1">{group.destination}</Typography>
+      <Typography variant="h4" component="h1">
+        {group.destination}
+      </Typography>
       <Typography variant="body1">Owner: {group.owner}</Typography>
       <Typography variant="body1">Start Point: {group.startPoint}</Typography>
-      <Typography variant="body1">Date: {group.date ? group.date.toLocaleDateString() : 'Unknown'}</Typography>
+      <Typography variant="body1">
+        Date: {group.date ? group.date.toLocaleDateString() : 'Unknown'}
+      </Typography>
       <Typography variant="body1">Time: {group.startTime}</Typography>
-      <Typography variant="body1">Seats Available: {group.seatsAvailable}</Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate('/unirides')}>Back to Groups</Button>
-      <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>Leave Group</Button>
+      <Typography variant="body1">
+        Seats Available: {group.seatsAvailable}
+      </Typography>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate('/unirides')}
+      >
+        Back to Groups
+      </Button>
+      <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
+        Leave Group
+      </Button>
     </Container>
   );
 };

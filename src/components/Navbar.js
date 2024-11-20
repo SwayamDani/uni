@@ -11,17 +11,29 @@ const Navbar = () => {
   };
 
   return (
-      <nav className="navbar">
-        <Link to="/unirides" className="navbar__logo">UniRides</Link>
-        <div className="navbar__links">
-          <Link to="/unirides/join-group" className="navbar__link">Join a Group</Link>
-          <Link to="/unirides/create-group" className="navbar__link">Create Group</Link>
-          <Link to="/unirides/about-us" className="navbar__link">About Us</Link>
-          <div className="navbar__profile" onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
-            <i className="fas fa-user"></i> {/* Profile Icon */}
-          </div>
+    <nav className="navbar">
+      <Link to="/unirides" className="navbar__logo">
+        UniRides
+      </Link>
+      <div className="navbar__links">
+        <Link to="/unirides/join-group" className="navbar__link">
+          Join a Group
+        </Link>
+        <Link to="/unirides/create-group" className="navbar__link">
+          Create Group
+        </Link>
+        <Link to="/unirides/about-us" className="navbar__link">
+          About Us
+        </Link>
+        <div
+          className="navbar__profile"
+          onClick={handleProfileClick}
+          style={{ cursor: 'pointer' }}
+        >
+          <i className="fas fa-user"></i> {/* Profile Icon */}
         </div>
-      </nav>
+      </div>
+    </nav>
   );
 };
 

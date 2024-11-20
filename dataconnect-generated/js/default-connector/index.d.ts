@@ -8,8 +8,3 @@ export type UUIDString = string;
 export type Int64String = string;
 
 export type DateString = string;
-
-
-
-
-

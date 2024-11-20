@@ -2,9 +2,21 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faSyncAlt, faFilter } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSpinner,
+  faSyncAlt,
+  faFilter,
+} from '@fortawesome/free-solid-svg-icons';
 import { GoogleMap, Marker } from '@react-google-maps/api';
-import { collection, getDocs, updateDoc, doc, arrayUnion, query, where } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  arrayUnion,
+  query,
+  where,
+} from 'firebase/firestore';
 import { auth, googleProvider, db } from '../firebase';
 import './Cards.css';
 
@@ -18,7 +30,7 @@ const Cards = () => {
   const [appliedFilter, setAppliedFilter] = useState([]);
   const [sortOrder, setSortOrder] = useState('asc');
   const [showFilter, setShowFilter] = useState(false);
-  const [buttonText, setButtonText] = useState("Join Group");
+  const [buttonText, setButtonText] = useState('Join Group');
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const cardWrapperRef = useRef(null);
   const navigate = useNavigate();
@@ -44,11 +56,15 @@ const Cards = () => {
       q = query(groups, where('groupType', 'in', appliedFilter));
     }
     getDocs(q)
-      .then(response => {
-        const data = response.docs.map(doc => ({ ...doc.data(), date: doc.data().date.toDate(), id: doc.id }));
+      .then((response) => {
+        const data = response.docs.map((doc) => ({
+          ...doc.data(),
+          date: doc.data().date.toDate(),
+          id: doc.id,
+        }));
         setData(data);
       })
-      .catch(error => setError(error.message))
+      .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   };
 
@@ -56,7 +72,9 @@ const Cards = () => {
     if (flippedCardIndex === index) {
       setFlippedCardIndex(null);
     } else {
-      const geocodeResponse = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(item.destination)}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`);
+      const geocodeResponse = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(item.destination)}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
       const geocodeData = await geocodeResponse.json();
       if (geocodeData.results.length > 0) {
         const location = geocodeData.results[0].geometry.location;
@@ -76,23 +94,23 @@ const Cards = () => {
     event.stopPropagation();
     const name = user.displayName;
     if (item.ridees.includes(name)) {
-      alert("You are already in the group.");
+      alert('You are already in the group.');
       navigate(`/unirides/group/${item.id}`);
     } else if (item.seatsAvailable > 0) {
       try {
         const groupDoc = doc(db, 'groups', item.id);
         await updateDoc(groupDoc, {
           seatsAvailable: item.seatsAvailable - 1,
-          ridees: arrayUnion(name)
+          ridees: arrayUnion(name),
         });
-        setButtonText("Joined Group");
+        setButtonText('Joined Group');
         setButtonDisabled(true);
         navigate(`/unirides/group/${item.id}`);
       } catch (error) {
-        console.error("Error updating document: ", error);
+        console.error('Error updating document: ', error);
       }
     } else {
-      setButtonText("Group Full");
+      setButtonText('Group Full');
       setButtonDisabled(true);
     }
   };
@@ -110,7 +128,9 @@ const Cards = () => {
   };
 
   const applyFilter = () => {
-    const checkedValues = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+    const checkedValues = Array.from(
+      document.querySelectorAll('input[type="checkbox"]:checked')
+    ).map((checkbox) => checkbox.value);
     setAppliedFilter(checkedValues);
     fetchData();
   };
@@ -131,7 +151,7 @@ const Cards = () => {
 
   if (loading) {
     return (
-      <div className='loading'>
+      <div className="loading">
         <FontAwesomeIcon icon={faSpinner} spin size="3x" />
       </div>
     );
@@ -143,7 +163,7 @@ const Cards = () => {
 
   return (
     <div className="groups-container">
-      <div className='cards' id="cards">
+      <div className="cards" id="cards">
         <div className="filter-icon" onClick={toggleFilter}>
           <FontAwesomeIcon icon={faFilter} size="2x" />
         </div>
@@ -155,34 +175,38 @@ const Cards = () => {
                 <div>
                   <label>
                     Groceries
-                    <input type="checkbox" value="groceries"/>
+                    <input type="checkbox" value="groceries" />
                   </label>
                   <label>
                     Airport
-                    <input type="checkbox" value="airport"/>
+                    <input type="checkbox" value="airport" />
                   </label>
                   <label>
                     Metro/BART
-                    <input type="checkbox" value="metro"/>
+                    <input type="checkbox" value="metro" />
                   </label>
                   <label>
                     Home
-                    <input type="checkbox" value="home"/>
+                    <input type="checkbox" value="home" />
                   </label>
                   <label>
                     On Campus
-                    <input type="checkbox" value="on_campus"/>
+                    <input type="checkbox" value="on_campus" />
                   </label>
                   <label>
                     Other
-                    <input type="checkbox" value="other"/>
+                    <input type="checkbox" value="other" />
                   </label>
                 </div>
                 <button onClick={applyFilter}>Apply Filter</button>
               </div>
               <div className="sort">
                 <label htmlFor="sortOrder">Sort by date:</label>
-                <select id="sortOrder" value={sortOrder} onChange={handleSortChange}>
+                <select
+                  id="sortOrder"
+                  value={sortOrder}
+                  onChange={handleSortChange}
+                >
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
                 </select>
@@ -193,7 +217,9 @@ const Cards = () => {
         {sortedData.length === 0 ? (
           <div className="no-data">
             <p>No groups available. Create a new group?</p>
-            <button onClick={() => navigate('/unirides/create-group')}>Create Group</button>
+            <button onClick={() => navigate('/unirides/create-group')}>
+              Create Group
+            </button>
           </div>
         ) : (
           <div className="card__group">
@@ -205,15 +231,27 @@ const Cards = () => {
                   onClick={() => handleCardClick(item, index)}
                 >
                   <div className="card-front">
-                    <div className="card-header">{item.destination || 'Unknown Destination'}</div>
+                    <div className="card-header">
+                      {item.destination || 'Unknown Destination'}
+                    </div>
                     <div className="card-body">
                       <p>Owner: {item.owner || 'Unknown'}</p>
-                      <p>Start Point: {truncateText(item.startPoint || '', 6)}</p>
-                      <p>Date: {item.date ? new Date(item.date).toLocaleDateString() : 'Unknown'}</p>
+                      <p>
+                        Start Point: {truncateText(item.startPoint || '', 6)}
+                      </p>
+                      <p>
+                        Date:{' '}
+                        {item.date
+                          ? new Date(item.date).toLocaleDateString()
+                          : 'Unknown'}
+                      </p>
                       <p>Time: {item.startTime || 'Unknown'}</p>
                     </div>
                     <div className="card-footer">
-                      <button onClick={(event) => handleButtonClick(event, item)} disabled={buttonDisabled}>
+                      <button
+                        onClick={(event) => handleButtonClick(event, item)}
+                        disabled={buttonDisabled}
+                      >
                         {buttonText}
                       </button>
                     </div>

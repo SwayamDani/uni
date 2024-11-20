@@ -3,7 +3,8 @@ import React from 'react';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const frontendApi = "pk_test_dXByaWdodC1waXJhbmhhLTcwLmNsZXJrLmFjY291bnRzLmRldiQ"; // Replace this with your actual key
+const frontendApi =
+  'pk_test_dXByaWdodC1waXJhbmhhLTcwLmNsZXJrLmFjY291bnRzLmRldiQ'; // Replace this with your actual key
 
 const ClerkProviderWrapper = ({ children }) => {
   if (!frontendApi) {

@@ -79,7 +79,9 @@ body {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: background-color 0.3s, transform 0.3s;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -177,7 +179,8 @@ body {
 
 /* Media Queries */
 @media (max-width: 768px) {
-  .profile-details-buttons, .edit-buttons {
+  .profile-details-buttons,
+  .edit-buttons {
     flex-direction: column;
     gap: 15px;
   }

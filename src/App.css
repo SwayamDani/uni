@@ -6,8 +6,8 @@
   box-sizing: border-box;
 }
 
-body, html {
-  
+body,
+html {
   height: 20vh;
   /* overflow: hidden; Prevent the body itself from scrolling */
 }
@@ -25,5 +25,3 @@ body, html {
   overflow-y: auto; /* Make the main content scrollable */
   padding: 0;
 }
-
-
