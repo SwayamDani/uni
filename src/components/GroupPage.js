@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
+import Chat from '../components/chat';
 import {
   Button,
   CircularProgress,
@@ -14,12 +15,20 @@ import { useGoogleMaps } from './GoogleMapsContext';
 
 const GroupPage = () => {
   const { groupId } = useParams();
-  const [user] = useState(null);
+  const [user, setUser] = useState(null);
   const [group, setGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const google = useGoogleMaps();
+
+  useEffect(() => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribeAuth();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -98,10 +107,6 @@ const GroupPage = () => {
     }
   };
 
-  
-
-  
-
   if (loading) {
     return (
       <Container className="loading-container">
@@ -129,7 +134,7 @@ const GroupPage = () => {
   return (
     <Container className="group-page">
       <div id="content">
-        <div id="map" style={{ width: '100%', margin: '1rem 0' }}></div>
+        <div id="map" style={{width: '100%', margin: '1rem 0'}}></div>
         <div id="sidebar"></div>
       </div>
       <Typography variant="h4" component="h1">
@@ -154,6 +159,9 @@ const GroupPage = () => {
       <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
         Leave Group
       </Button>
+      <div className="App">
+        {user ? <Chat user={user} groupId={groupId}/> : <p>Please log in to chat.</p>}
+      </div>
     </Container>
   );
 };
