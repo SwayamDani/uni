@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CreateGroup.css';
@@ -24,7 +24,7 @@ const CreateGroup = () => {
   });
   const navigate = useNavigate();
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback( async () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
       try {
@@ -44,11 +44,11 @@ const CreateGroup = () => {
       navigate('/login');
     }
     setLoading(false);
-  };
+  },[ navigate, setFormData]);
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
