@@ -3,7 +3,7 @@ import { db, auth } from '../firebase';
 import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import './chat.css';
 
-const CardChat = ({ groupId, user }) => {
+const CardChat = ({ groupId }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
@@ -19,60 +19,87 @@ const CardChat = ({ groupId, user }) => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      const q = query(collection(db, 'groups', groupId, 'messages'), orderBy('timestamp', 'asc'));
-      const unsubscribeMessages = onSnapshot(q, (snapshot) => {
-        const fetchedMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setMessages(fetchedMessages);
-        scrollToBottom();
+    if (currentUser) {
+      const q = query(
+        collection(db, 'groups', groupId, 'messages'),
+        orderBy('timestamp', 'asc')
+      );
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const messagesData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setMessages(messagesData);
       });
-
-      return () => unsubscribeMessages();
+      return () => unsubscribe();
     }
-  }, [groupId, user]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, [currentUser, groupId]);
 
   const handleSendMessage = async () => {
-    if (newMessage.trim() && user) {
+    if (newMessage.trim() !== '') {
       await addDoc(collection(db, 'groups', groupId, 'messages'), {
         text: newMessage,
-        user: user.uid,
+        user: currentUser.uid,
+        userName: currentUser.displayName,
+        userPhotoURL: currentUser.photoURL,
         timestamp: new Date(),
       });
       setNewMessage('');
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  if (!user) {
+  if (!currentUser) {
     return <p className="header-container">Please sign in to use the chat.</p>;
   }
 
   return (
-    <div className="card-chat-container">
-      <div className="header-container">Chat Room</div>
-      <div className="messages-container">
-        {messages.map((message) => (
-          <div key={message.id} className={`message ${message.user === user.uid ? 'sent' : 'received'}`}>
-            <p>{message.text}</p>
-            <div className="timestamp">{new Date(message.timestamp?.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+    <section>
+      <div className="container py-5">
+        <div className="row d-flex justify-content-center">
+          <div className="col-md-10 col-lg-8 col-xl-6">
+            <div className="card" id="chat2">
+              <div className="card-header d-flex justify-content-between align-items-center p-3">
+                <h5 className="mb-0">Chat</h5>
+              </div>
+              <div className="card-body" style={{ position: 'relative', height: '400px' }}>
+                {messages.map((message) => (
+                  <div key={message.id} className={`d-flex flex-row justify-content-${message.user === currentUser.uid ? 'end' : 'start'} mb-4`}>
+                    {message.user !== currentUser.uid && (
+                      <img src={message.userPhotoURL || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"} alt="avatar" className="avatar" />
+                    )}
+                    <div>
+                      <p className="small mb-1">{message.userName}</p>
+                      <p className={`small p-2 ${message.user === currentUser.uid ? 'me-3 text-white bg-primary' : 'ms-3 bg-body-tertiary'} mb-1 rounded-3`}>
+                        {message.text}
+                      </p>
+                      <p className={`small ${message.user === currentUser.uid ? 'me-3' : 'ms-3'} mb-3 rounded-3 text-muted d-flex justify-content-${message.user === currentUser.uid ? 'end' : 'start'}`}>
+                        {new Date(message.timestamp.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                    {message.user === currentUser.uid && (
+                      <img src={message.userPhotoURL || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4-bg.webp"} alt="avatar" className="avatar" />
+                    )}
+                  </div>
+                ))}
+                <div ref={messagesEndRef} />
+              </div>
+              <div className="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+                <img src={currentUser.photoURL || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"} alt="avatar" className="avatar-small" />
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Type message"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                />
+                <a className="ms-3" href="#!" onClick={handleSendMessage}><i className="fas fa-paper-plane"></i></a>
+              </div>
+            </div>
           </div>
-        ))}
-        <div ref={messagesEndRef} />
+        </div>
       </div>
-      <div className="input-container">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' ? handleSendMessage() : null}
-          placeholder="Type a message"
-        />
-        <button onClick={handleSendMessage}>Send</button>
-      </div>
-    </div>
+    </section>
   );
 };
 

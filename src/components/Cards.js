@@ -146,108 +146,108 @@ const Cards = () => {
   }
 
   return (
-    <div className="groups-container">
-      <div className="cards" id="cards">
-        <div className="filter-icon" onClick={toggleFilter}>
-          <FontAwesomeIcon icon={faFilter} size="2x" />
-        </div>
-        {showFilter && (
-          <div className="filter-sort-container">
-            <div className="filter-box">
-              <div className="filter">
-                <div>Filter:</div>
-                <div>
-                  <label>
-                    Groceries
-                    <input type="checkbox" value="groceries" />
-                  </label>
-                  <label>
-                    Airport
-                    <input type="checkbox" value="airport" />
-                  </label>
-                  <label>
-                    Metro/BART
-                    <input type="checkbox" value="metro" />
-                  </label>
-                  <label>
-                    Home
-                    <input type="checkbox" value="home" />
-                  </label>
-                  <label>
-                    On Campus
-                    <input type="checkbox" value="on_campus" />
-                  </label>
-                  <label>
-                    Other
-                    <input type="checkbox" value="other" />
-                  </label>
-                </div>
-                <button onClick={applyFilter}>Apply Filter</button>
+  <div className="groups-container">
+    <div className={`cards ${showFilter ? 'filter-visible' : ''}`} id="cards">
+      <div className="filter-icon" onClick={toggleFilter}>
+        <FontAwesomeIcon icon={faFilter} size="2x" />
+      </div>
+      {showFilter && (
+        <div className="filter-sort-container">
+          <div className="filter-box">
+            <div className="filter">
+              <div>Filter:</div>
+              <div>
+                <label>
+                  Groceries
+                  <input type="checkbox" value="groceries" />
+                </label>
+                <label>
+                  Airport
+                  <input type="checkbox" value="airport" />
+                </label>
+                <label>
+                  Metro/BART
+                  <input type="checkbox" value="metro" />
+                </label>
+                <label>
+                  Home
+                  <input type="checkbox" value="home" />
+                </label>
+                <label>
+                  On Campus
+                  <input type="checkbox" value="on_campus" />
+                </label>
+                <label>
+                  Other
+                  <input type="checkbox" value="other" />
+                </label>
               </div>
-              <div className="sort">
-                <label htmlFor="sortOrder">Sort by date:</label>
-                <select
-                  id="sortOrder"
-                  value={sortOrder}
-                  onChange={handleSortChange}
-                >
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </select>
-              </div>
+              <button onClick={applyFilter}>Apply Filter</button>
+            </div>
+            <div className="sort">
+              <label htmlFor="sortOrder">Sort by date:</label>
+              <select
+                id="sortOrder"
+                value={sortOrder}
+                onChange={handleSortChange}
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
             </div>
           </div>
-        )}
-        {sortedData.length === 0 ? (
-          <div className="no-data">
-            <p>No groups available. Create a new group?</p>
-            <button onClick={() => navigate('/create-group')}>
-              Create Group
-            </button>
-          </div>
-        ) : (
-          <div className="card__group">
-            <div className="card-wrapper" ref={cardWrapperRef}>
-              {sortedData.map((item, index) => (
-                <div
-                  key={index}
-                  className={`card text-white bg-transparent ${flippedCardIndex === index ? 'flipped' : ''}`}
-                  onClick={() => handleCardClick(item, index)}
-                >
-                  <div className="card-front">
-                    <div className="card-header">
-                      {item.destination || 'Unknown Destination'}
-                    </div>
-                    <div className="card-body">
-                      <p>Owner: {item.owner || 'Unknown'}</p>
-                      <p>
-                        Start Point: {truncateText(item.startPoint || '', 6)}
-                      </p>
-                      <p>
-                        Date:{' '}
-                        {item.date
-                          ? new Date(item.date).toLocaleDateString()
-                          : 'Unknown'}
-                      </p>
-                      <p>Time: {item.startTime || 'Unknown'}</p>
-                    </div>
-                    <div className="card-footer">
-                      <button
-                        onClick={(event) => handleButtonClick(event, item)}
-                        disabled={buttonDisabled}
-                      >
-                        {buttonText}
-                      </button>
-                    </div>
+        </div>
+      )}
+      {sortedData.length === 0 ? (
+        <div className="no-data">
+          <p>No groups available. Create a new group?</p>
+          <button onClick={() => navigate('/create-group')}>
+            Create Group
+          </button>
+        </div>
+      ) : (
+        <div className="card__group">
+          <div className="card-wrapper" ref={cardWrapperRef}>
+            {sortedData.map((item, index) => (
+              <div
+                key={index}
+                className={`card text-white bg-transparent ${flippedCardIndex === index ? 'flipped' : ''}`}
+                onClick={() => handleCardClick(item, index)}
+              >
+                <div className="card-front">
+                  <div className="card-header">
+                    {item.destination || 'Unknown Destination'}
+                  </div>
+                  <div className="card-body">
+                    <p>Owner: {item.owner || 'Unknown'}</p>
+                    <p>
+                      Start Point: {truncateText(item.startPoint || '', 6)}
+                    </p>
+                    <p>
+                      Date:{' '}
+                      {item.date
+                        ? new Date(item.date).toLocaleDateString()
+                        : 'Unknown'}
+                    </p>
+                    <p>Time: {item.startTime || 'Unknown'}</p>
+                  </div>
+                  <div className="card-footer">
+                    <button
+                      onClick={(event) => handleButtonClick(event, item)}
+                      disabled={buttonDisabled}
+                    >
+                      {buttonText}
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-  );
-};
+  </div>
+);
+}
 
 export default Cards;

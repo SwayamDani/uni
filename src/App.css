@@ -9,19 +9,17 @@
 body,
 html {
   height: 20vh;
-  /* overflow: hidden; Prevent the body itself from scrolling */
+  overflow: visible;
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  /* min-height: 100vh; Ensure the app takes up at least the full viewport height */
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* src/App.css or wherever your main content is styled */
 .main-content {
   flex: 1 0 auto; /* Allow the main content to grow */
   overflow-y: auto; /* Make the main content scrollable */
-  padding-top: 60px;
 }

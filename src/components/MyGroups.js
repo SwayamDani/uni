@@ -64,9 +64,6 @@ const MyGroups = ({ handleButtonClick, buttonDisabled, buttonText }) => {
 
   return (
     <div className="groups-container">
-      <div className="filter-sort-container">
-        {/* Add filter and sort options here if needed */}
-      </div>
       <div className="card-wrapper">
         {userGroups.map((group, index) => (
           <div className="card" key={index}>

@@ -6,10 +6,12 @@ import CustomStandaloneSearchBox from './CustomStandaloneSearchBox';
 import { collection, addDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateGroup = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     groupType: '',
     startPoint: '',
@@ -18,35 +20,35 @@ const CreateGroup = () => {
     date: '',
     seats: '',
     uberType: '',
-    owner: user ? user.fullName : '',
+    owner: '',
   });
   const navigate = useNavigate();
 
   const fetchUserData = async () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      
-      const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setUser(userData);
-      }
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-    if (user) {
-      if (user) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          owner: user.fullName,
-        }));
+      try {
+        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setUser(userData);
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            owner: userData.fullName,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
       }
     } else {
       navigate('/login');
     }
-  }, [user, navigate]);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +86,7 @@ const CreateGroup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isDateAfterToday(formData.date)) {
-      alert('The date must be after today.');
+      toast.error('The date must be after today.');
       return;
     }
 
@@ -98,36 +100,34 @@ const CreateGroup = () => {
         !formData.seats ||
         !formData.uberType
       ) {
-        alert('Please fill in all required fields.');
+        toast.error('Please fill in all required fields.');
         return;
       }
 
       const groupsCollection = collection(db, 'groups');
-      addDoc(groupsCollection, {
+      await addDoc(groupsCollection, {
         ...formData,
         date: new Date(formData.date),
         ridees: [user.fullName],
         seatsAvailable: formData.seats,
-      })
-        .then((response) => {
-          console.log('Document written with ID: ', response.id);
-        })
-        .catch((error) => {
-          console.error('Error adding document: ', error);
-        });
+      });
 
-      navigate('/');
+      toast.success('Group created successfully!');
+      setTimeout(() => navigate('/'), 2000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast.error('An error occurred while creating the group.');
     }
   };
 
+  if (loading) {
+    return <div className="text-center mt-5">Loading...</div>;
+  }
+
   return (
-    <div className="container mt-5">
-      <form
-        onSubmit={handleSubmit}
-        className="create-group-form p-4 shadow rounded"
-      >
+    <div className="background-container">
+      <ToastContainer />
+      <form onSubmit={handleSubmit} className="create-group-form p-4 shadow rounded">
         <h2 className="text-center mb-4">Create a Group</h2>
         <div className="form-group mb-3">
           <label htmlFor="groupType" className="form-label">
