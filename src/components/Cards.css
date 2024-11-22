@@ -1,5 +1,3 @@
-/* Enhanced Cards.css for better UI/UX - Commercial Version */
-
 /* Container for cards */
 .groups-container {
   width: 100vw;
@@ -10,18 +8,27 @@
   overflow: visible;
   /*background: linear-gradient(135deg, #7b2ff7, #00d4ff);*/
   color: #333;
+  display: flex;
+  flex-direction: row;
+}
+ 
+
+.cards {
+  margin-left: 200px; /* Add enough margin for the filter box */
+  flex: 1; /* Allow cards to take remaining space */
 }
 
-/* Filter and sort container */
 .filter-sort-container {
-  display: flex;
-  position: absolute;
+  position: fixed; /* Keep it fixed on the left side */
+  top: 15%; /* Adjust for a suitable top spacing, making it more aligned */
+  left: 10px; /* Close to the left edge */
+  width: 180px; /* Reduce width to make it even more compact */
   z-index: 2;
-  height: 100%;
+  height: auto; /* Adjust height to fit content */
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  padding: 5px;
+  padding: 15px; /* Keep enough padding for spacing inside */
   border-radius: 8px;
 }
 
@@ -138,9 +145,9 @@
 
 .filter-icon {
   position: fixed;
-  top: 10%;
-  left: 20px;
-  z-index: 2;
+  top: 12%;
+  left: 10px; /* Align close to the edge */
+  z-index: 3;
   cursor: pointer;
   color: #007bff;
   transition: transform 0.3s;
