@@ -72,14 +72,17 @@
 /* Media Queries */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.75rem 1.5rem;
+    flex-direction: column;
+    height: auto;
+    padding: 10px 20px;
+  }
+
+  .navbar__logo{
+    font-size: 1rem;
   }
 
   .navbar__links {
     gap: 15px;
-  }
-
-  .navbar__link {
     font-size: 0.9rem;
   }
 
