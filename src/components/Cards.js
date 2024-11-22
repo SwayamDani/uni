@@ -3,16 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner, faFilter } from '@fortawesome/free-solid-svg-icons';
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  arrayUnion,
-  query,
-  where,
-} from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
+import { fetchGroups, joinGroup } from '../api/firebase';
 import './Cards.css';
 
 const Cards = () => {
@@ -29,40 +21,33 @@ const Cards = () => {
   const cardWrapperRef = useRef(null);
   const navigate = useNavigate();
 
-  const fetchData = useCallback(() => {
-    setLoading(true);
-    const groups = collection(db, 'groups');
-    let q = groups;
-    if (appliedFilter.length > 0) {
-      q = query(groups, where('groupType', 'in', appliedFilter));
-    }
-    getDocs(q)
-      .then((response) => {
-        const data = response.docs.map((doc) => ({
-          ...doc.data(),
-          date: doc.data().date.toDate(),
-          id: doc.id,
-        }));
-        setData(data);
-      })
-      .catch((error) => setError(error.message))
-      .finally(() => setLoading(false));
-  },[ appliedFilter]);
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        fetchData();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
       } else {
         navigate('/login');
       }
     });
 
     return () => unsubscribe();
-  }, [navigate, fetchData]);
+  }, [navigate]);
 
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const groupsData = await fetchGroups(appliedFilter);
+      setData(groupsData);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [appliedFilter]);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleCardClick = async (item, index) => {
     if (flippedCardIndex === index) {
@@ -90,11 +75,7 @@ const Cards = () => {
       navigate(`/group/${item.id}`);
     } else if (item.seatsAvailable > 0) {
       try {
-        const groupDoc = doc(db, 'groups', item.id);
-        await updateDoc(groupDoc, {
-          seatsAvailable: item.seatsAvailable - 1,
-          ridees: arrayUnion(name),
-        });
+        await joinGroup(item.id, name);
         setButtonText('Joined Group');
         setButtonDisabled(true);
         navigate(`/group/${item.id}`);
