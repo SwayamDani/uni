@@ -57,7 +57,7 @@ const CardChat = ({ groupId }) => {
     <section>
       <div className="container py-5">
         <div className="row d-flex justify-content-center">
-          <div className="col-md-10 col-lg-8 col-xl-6">
+          <div className="card-chat-container">
             <div className="card" id="chat2">
               <div className="card-header d-flex justify-content-between align-items-center p-3">
                 <h5 className="mb-0">Chat</h5>
