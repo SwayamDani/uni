@@ -1,6 +1,6 @@
 // src/api/firebase.js
 import { collection, getDocs, updateDoc, doc, arrayUnion, query, where } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { db } from '../firebase';
 
 export const fetchGroups = async (appliedFilter) => {
   const groups = collection(db, 'groups');
