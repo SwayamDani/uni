@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'build',
   "server": {
     "androidScheme": "https",
-    "hostname": "unirides-5913a.firebaseapp.com"
+    "hostname": ""
   }
 };
 
