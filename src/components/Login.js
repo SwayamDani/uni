@@ -1,121 +1,41 @@
-import React, { useEffect, useState } from 'react';
+// src/components/Login.js
+import React, { useEffect, useRef, useState } from 'react';
+import * as firebaseui from 'firebaseui';
+import { getAuth, GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
+import {auth, firebase} from '../firebase'
 import { useNavigate } from 'react-router-dom';
-import { auth, googleProvider } from '../firebase';
-import { signInWithPopup } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import './Login.css'; // Import CSS for styling
+import 'firebaseui/dist/firebaseui.css'; // Import FirebaseUI CSS
+import './Login.css'; // Optional: Your custom styles
 
 const Login = () => {
-  const [user, setUser] = useState(null);
-  const [formData, setFormData] = useState({
-    mobile: '',
-    university: '',
-  });
-  const [isNewUser, setIsNewUser] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkUser = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        setUser(currentUser);
-        const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-        if (userDoc.exists()) {
-          navigate('/profile'); // Redirect if user is already logged in
-        } else {
-          setIsNewUser(true);
-        }
-      }
+    const uiConfig = {
+      signInSuccessUrl: "/home", // Redirect after login
+      signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult) => {
+          console.log("User signed in:", authResult.user);
+          navigate("/home");
+          return false; // Prevent FirebaseUI from redirecting
+        },
+      },
     };
 
-    checkUser();
+    const ui = new firebaseui.auth.AuthUI(auth);
+    ui.start("#firebaseui-auth-container", uiConfig);
+
+    return () => ui.delete(); // Cleanup on unmount
   }, [navigate]);
 
-  const handleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      setUser(result.user);
-
-      // Check if user exists in the database
-      const userDoc = await getDoc(doc(db, 'users', result.user.uid));
-      if (userDoc.exists()) {
-        setIsNewUser(false);
-        navigate('/welcome'); // Redirect if user exists
-      } else {
-        setIsNewUser(true);
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Save user data to the database
-      await setDoc(doc(db, 'users', user.uid), {
-        email: user.email,
-        name: user.displayName,
-        mobile: formData.mobile,
-        university: formData.university,
-        photoURL: user.photoURL,
-      });
-      setIsNewUser(false);
-      // Redirect to /profile
-      navigate('/profile');
-    } catch (error) {
-      console.error('Error saving user data:', error);
-    }
-  };
-
   return (
-    <div className="auth-container">
-      {user ? (
-        <div className="user-info">
-          {isNewUser ? (
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="mobile">Mobile Number:</label>
-                <input
-                  type="text"
-                  id="mobile"
-                  name="mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="university">University Name:</label>
-                <input
-                  type="text"
-                  id="university"
-                  name="university"
-                  value={formData.university}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          ) : (
-            <></>
-          )}
-        </div>
-      ) : (
-        <button onClick={handleLogin} className="login-button">
-          Login with Google
-        </button>
-      )}
+    <div>
+      <h2>Login</h2>
+      <div id="firebaseui-auth-container"></div>
     </div>
   );
 };

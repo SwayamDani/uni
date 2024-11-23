@@ -1,7 +1,7 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { LoadScript } from '@react-google-maps/api';
 import App from './App';
 import { GoogleMapsProvider } from './components/GoogleMapsContext';
@@ -15,9 +15,7 @@ root.render(
   <React.StrictMode>
     <LoadScript googleMapsApiKey={api_key} libraries={['places']}>
       <GoogleMapsProvider>
-          <BrowserRouter>
             <App />
-          </BrowserRouter>
       </GoogleMapsProvider>
     </LoadScript>
   </React.StrictMode>
