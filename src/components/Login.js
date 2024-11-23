@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import* as firebaseui from 'firebaseui';
-import { getAuth, GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase'; // Ensure these are correctly exported from firebase.js
 import 'firebaseui/dist/firebaseui.css'; // Import FirebaseUI styles
@@ -70,7 +70,7 @@ const Login = () => {
     return () => {
       ui.reset();
     };
-  }, [auth, navigate, db]);
+  }, [navigate]);
 
   return (
     <div className="login-container">
