@@ -1,83 +1,129 @@
-// src/components/Login.js
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import* as firebaseui from 'firebaseui';
-import { GoogleAuthProvider, EmailAuthProvider } from 'firebase/auth';
+import { auth, googleProvider } from '../firebase';
+import { signInWithPopup, signOut } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase'; // Ensure these are correctly exported from firebase.js
-import 'firebaseui/dist/firebaseui.css'; // Import FirebaseUI styles
-import './Login.css'; // Import your custom styles
+import { db } from '../firebase';
+import './Login.css'; // Import CSS for styling
 
 const Login = () => {
-  const uiRef = useRef(null);
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
+    const [user, setUser] = useState(null);
+    const [formData, setFormData] = useState({
+        mobile: '',
+        university: ''
+    });
+    const [isNewUser, setIsNewUser] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    // Initialize FirebaseUI Auth
-    const ui =
-      firebaseui.auth.AuthUI.getInstance() ||
-      new firebaseui.auth.AuthUI(auth);
-
-    // FirebaseUI configuration
-    const uiConfig = {
-      signInFlow: 'popup', // Use 'redirect' for mobile compatibility
-      signInOptions: [
-        GoogleAuthProvider.PROVIDER_ID,
-        EmailAuthProvider.PROVIDER_ID,
-        // Add other providers if needed
-      ],
-      callbacks: {
-        signInSuccessWithAuthResult: async (authResult) => {
-          console.log("loggedin");
-          const user = authResult.user;
-          try {
-            const userRef = doc(db, 'users', user.uid);
-            const userDoc = await getDoc(userRef);
-
-            if (userDoc.exists()) {
-              // Existing user: Redirect to profile
-              navigate('/welcome');
-            } else {
-              // New user: Create user document and redirect to welcome
-              await setDoc(userRef, {
-                name: user.displayName,
-                email: user.email,
-                mobile: '',
-                university: '',
-              });
-              navigate('/welcome');
+    useEffect(() => {
+        const checkUser = async () => {
+            const currentUser = auth.currentUser;
+            if (currentUser) {
+                setUser(currentUser);
+                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                if (userDoc.exists()) {
+                    navigate('/welcome'); // Redirect if user is already logged in
+                } else {
+                    setIsNewUser(true);
+                }
             }
-          } catch (err) {
-            console.error('Error fetching or creating user document:', err);
-            setError('An error occurred during authentication. Please try again.');
-          }
+        };
 
-          return false; // Prevent FirebaseUI from automatically redirecting
-        },
-        signInFailure: (error) => {
-          console.error('Sign-in failure:', error);
-          setError(error.message);
-          return false; // Prevent FirebaseUI from performing default behavior
-        },
-      },
+        checkUser();
+    }, [navigate]);
+
+    const handleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            setUser(result.user);
+
+            // Check if user exists in the database
+            const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+            if (userDoc.exists()) {
+                setIsNewUser(false);
+                navigate('/welcome'); // Redirect if user exists
+            } else {
+                setIsNewUser(true);
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
     };
 
-    // Start FirebaseUI
-    ui.start(uiRef.current, uiConfig);
-
-    // Cleanup FirebaseUI on component unmount
-    return () => {
-      ui.reset();
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            setUser(null);
+            setIsNewUser(false);
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
     };
-  }, [navigate]);
 
-  return (
-    <div className="login-container">
-      {error && <p className="error-message">{error}</p>}
-      <div ref={uiRef} />
-    </div>
-  );
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            // Save user data to the database
+            await setDoc(doc(db, 'users', user.uid), {
+                email: user.email,
+                name: user.displayName,
+                mobile: formData.mobile,
+                university: formData.university,
+                photoURL: user.photoURL
+            });
+            setIsNewUser(false);
+            // Redirect to /unirides/profile
+            navigate('/unirides/profile');
+        } catch (error) {
+            console.error('Error saving user data:', error);
+        }
+    };
+
+    return (
+        <div className="auth-container">
+            {user ? (
+                <div className="user-info">
+                    {isNewUser ? (
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="mobile">Mobile Number:</label>
+                                <input
+                                    type="text"
+                                    id="mobile"
+                                    name="mobile"
+                                    value={formData.mobile}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="university">University Name:</label>
+                                <input
+                                    type="text"
+                                    id="university"
+                                    name="university"
+                                    value={formData.university}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    ):(<></>) }
+                </div>
+            ) : (
+                <button onClick={handleLogin} className="login-button">Login with Google</button>
+            )}
+        </div>
+    );
 };
 
 export default Login;

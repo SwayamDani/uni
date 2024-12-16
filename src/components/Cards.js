@@ -207,7 +207,9 @@ const Cards = () => {
                     <p>
                       Date:{' '}
                       {item.date
-                        ? new Date(item.date).toLocaleDateString()
+                        ? isNaN(new Date(item.date))
+                          ? 'Invalid'
+                          : new Date(item.date).toLocaleDateString()
                         : 'Unknown'}
                     </p>
                     <p>Time: {item.startTime || 'Unknown'}</p>

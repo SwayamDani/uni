@@ -15,11 +15,12 @@ html {
 .App {
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;
 }
 
 /* src/App.css or wherever your main content is styled */
 .main-content {
   flex: 1 0 auto; /* Allow the main content to grow */
   overflow-y: auto; /* Make the main content scrollable */
+
 }

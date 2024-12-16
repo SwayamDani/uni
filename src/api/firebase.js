@@ -9,7 +9,18 @@ export const fetchGroups = async (appliedFilter) => {
     q = query(groups, where('groupType', 'in', appliedFilter));
   }
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return querySnapshot.docs.map(doc => {
+    const data = doc.data();
+
+    // Convert the 'date' field to a formatted date string
+    if (data.date && typeof data.date.toDate === 'function') {
+      data.date = data.date.toDate();
+    } else {
+      data.date = 'Unknown';
+    }
+
+    return { id: doc.id, ...data };
+  });
 };
 
 export const updateGroup = async (groupId, data) => {

@@ -59,7 +59,7 @@
 
 /* Add Background and Decorative Elements */
 body {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b, #86a8e7, #91eac9);
+  /* background: linear-gradient(135deg, #ff7e5f, #feb47b, #86a8e7, #91eac9); */
   background-size: 1000% 1000%;
   animation: gradientAnimation 15s ease infinite;
   font-family: Arial, sans-serif;

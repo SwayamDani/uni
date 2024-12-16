@@ -31,10 +31,10 @@ const CreateGroup = () => {
         const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          setUser(userData);
+          setUser(userData.name);
           setFormData((prevFormData) => ({
             ...prevFormData,
-            owner: userData.fullName,
+            owner: userData.name,
           }));
         }
       } catch (error) {
@@ -105,15 +105,15 @@ const CreateGroup = () => {
       }
 
       const groupsCollection = collection(db, 'groups');
-      await addDoc(groupsCollection, {
+      const docRef = await addDoc(groupsCollection, {
         ...formData,
         date: new Date(formData.date),
-        ridees: [user.fullName],
+        ridees: [user],
         seatsAvailable: formData.seats,
       });
 
       toast.success('Group created successfully!');
-      setTimeout(() => navigate('/'), 2000);
+      setTimeout(() => navigate(`/group/${docRef.id}`), 2000);
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('An error occurred while creating the group.');
