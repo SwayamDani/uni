@@ -50,16 +50,6 @@ const Login = () => {
         }
     };
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            setUser(null);
-            setIsNewUser(false);
-        } catch (error) {
-            console.error('Error during logout:', error);
-        }
-    };
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
