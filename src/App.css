@@ -22,5 +22,5 @@ html {
 .main-content {
   flex: 1 0 auto; /* Allow the main content to grow */
   overflow-y: auto; /* Make the main content scrollable */
-
+  margin-top: 60px;
 }
