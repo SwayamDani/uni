@@ -1,81 +1,62 @@
-.chat-container {
+/* Add your custom styles here */
+.card-chat-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  width: 100%;
+}
+
+.card{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-body{
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .header-container {
-  padding: 15px;
-  background-color: #007bff;
-  color: white;
-  text-align: center;
-  font-weight: bold;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .messages-container {
   flex: 1;
-  padding: 15px;
   overflow-y: auto;
-  background-color: #f1f1f1;
+  padding: 10px;
 }
 
 .message {
-  margin-bottom: 15px;
-  padding: 15px;
-  border-radius: 20px;
-  max-width: 80%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
 }
 
 .message.sent {
-  background-color: #dcf8c6;
-  align-self: flex-end;
-}
-
-.message.received {
-  background-color: #fff;
-  align-self: flex-start;
-  border: 1px solid #ccc;
-}
-
-.timestamp {
-  font-size: 0.75rem;
-  color: #888;
-  margin-top: 5px;
   text-align: right;
 }
 
-.input-container {
-  display: flex;
-  padding: 15px;
-  background-color: #fff;
-  border-top: 1px solid #ccc;
+.message.received {
+  text-align: left;
 }
 
-.input-container input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  margin-right: 10px;
+.timestamp {
+  font-size: 0.8em;
+  color: #6c757d;
 }
 
-.input-container button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
 }
 
-.input-container button:hover {
-  background-color: #0056b3;
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
 }

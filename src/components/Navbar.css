@@ -1,10 +1,11 @@
 /* src/components/Navbar.css */
 
 .navbar {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   width: 100%;
+  height: 60px;
   z-index: 1000;
   background-color: #ffffff;
   padding: 1rem 2rem;
@@ -71,14 +72,17 @@
 /* Media Queries */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.75rem 1.5rem;
+    flex-direction: column;
+    height: auto;
+    padding: 10px 20px;
+  }
+
+  .navbar__logo{
+    font-size: 1rem;
   }
 
   .navbar__links {
     gap: 15px;
-  }
-
-  .navbar__link {
     font-size: 0.9rem;
   }
 

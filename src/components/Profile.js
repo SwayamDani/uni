@@ -89,14 +89,10 @@ const Profile = () => {
   return (
     <div className="profile">
       <div className="profile-header">
-        {photoURL ? (
-          <img src={photoURL} alt="Profile" className="profile-picture" />
-        ) : (
           <i
             className="fas fa-user-circle profile-picture"
             aria-hidden="true"
           ></i>
-        )}
         <div className="profile-info">
           {isEditing ? (
             <input

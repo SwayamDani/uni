@@ -1,25 +1,64 @@
-.my-groups {
+.groups-container {
   padding: 20px;
+  overflow: hidden;
+  min-height: 120vh;
 }
 
-.group-card {
-  background-color: #f9f9f9;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
+.card {
+  width: 400px;
+  min-height: 350px;
+  max-height: 420px;
+  overflow: hidden;
+  overflow-x: hidden;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+  cursor: pointer;
 }
 
-.group-card h2 {
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+}
+
+.card-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.card-body {
+  padding: 1rem;
+  color: #333;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  margin-top: auto;
+}
+
+.card h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.group-card p {
+.card p {
   font-size: 1.2rem;
   margin: 5px 0;
 }
 
-.group-card button {
+.card button {
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;

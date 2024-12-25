@@ -4,7 +4,7 @@ import { auth, db } from '../firebase'; // Import the Firestore instance directl
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
-import './Cards.css'; // Reuse the same CSS
+import './MyGroups.css'; // Reuse the same CSS
 
 const MyGroups = ({ handleButtonClick, buttonDisabled, buttonText }) => {
   const [userGroups, setUserGroups] = useState([]);
@@ -64,9 +64,6 @@ const MyGroups = ({ handleButtonClick, buttonDisabled, buttonText }) => {
 
   return (
     <div className="groups-container">
-      <div className="filter-sort-container">
-        {/* Add filter and sort options here if needed */}
-      </div>
       <div className="card-wrapper">
         {userGroups.map((group, index) => (
           <div className="card" key={index}>
