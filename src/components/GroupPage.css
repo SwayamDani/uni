@@ -1,10 +1,9 @@
 .group-page {
   margin-top: 0.5vh;
   padding: 5rem;
-  /*background-color: #ffffff;*/
+  min-height: 100vh;
+  overflow: hidden;
   border-radius: 12px;
-  /*box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);*/
-  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -12,9 +11,32 @@
   gap: 2rem;
 }
 
+#panels {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+#left-panel {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+}
+
+#right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 50%;
+}
+
 #content {
   height: 500px;
   display: flex;
+  flex-direction: row;
   gap: 2rem;
   margin-bottom: 2rem;
   padding: 1rem;
@@ -29,7 +51,6 @@
   min-height: 400px;
   overflow: hidden;
   overflow-x: hidden;
-  perspective: 1000px;
   background-color: #fff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);

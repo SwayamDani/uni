@@ -1,29 +1,43 @@
-/* Add your custom styles here */
+/* Updated chat.css for better UI/UX */
 .card-chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 700px;
   width: 100%;
 }
 
-.card{
+.card {
   height: 100%;
   display: flex;
   flex-direction: column;
   border: 1px solid #dee2e6;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  border-radius: 8px;
 }
 
-.card-body{
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-.header-container {
+.card-header {
   background-color: #f8f9fa;
   padding: 10px;
   border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-body {
+  overflow-y: auto;
+  padding: 10px;
+  flex: 1;
+  background-color: #ffffff;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
 }
 
 .messages-container {
@@ -44,19 +58,80 @@
   text-align: left;
 }
 
-.timestamp {
-  font-size: 0.8em;
-  color: #6c757d;
-}
-
 .avatar {
   width: 45px;
   height: 45px;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .avatar-small {
   width: 40px;
   height: 40px;
-  border-radius: 100%;
+  border-radius: 50%;
+}
+
+input.form-control {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  flex: 1;
+  font-size: 1rem;
+  margin-left: 10px;
+}
+
+input.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.card-footer a {
+  color: #007bff;
+  font-size: 1.5rem;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.card-footer a:hover {
+  color: #0056b3;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.bg-primary {
+  background-color: #007bff !important;
+}
+
+.bg-body-tertiary {
+  background-color: #f8f9fa !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem !important;
 }

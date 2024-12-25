@@ -3,14 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import CardChat from '../components/chat';
-import {
-  Button,
-  CircularProgress,
-  Container,
-  Typography,
-  Alert,
-  Snackbar,
-} from '@mui/material';
+import {Button, CircularProgress, Container, Typography, Alert, Snackbar} from '@mui/material';
 import './GroupPage.css';
 import { useGoogleMaps } from './GoogleMapsContext';
 
@@ -21,7 +14,6 @@ const GroupPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [feedback, setFeedback] = useState(null);
-  const [chatOpen, setChatOpen] = useState(false);
   const navigate = useNavigate();
   const google = useGoogleMaps();
 
@@ -148,51 +140,49 @@ const GroupPage = () => {
           onClose={() => setFeedback(null)}
         />
       )}
-      <div id="content">
-        <div id="map" style={{width: '100%', margin: '1rem 0'}}></div>
-        <div id="sidebar"></div>
-      </div>
-      <Typography variant="h4" component="h1">
-        {group.destination}
-      </Typography>
-      <Typography variant="body1">Owner: {group.owner}</Typography>
-      <Typography variant="body1">Start Point: {group.startPoint}</Typography>
-      <Typography variant="body1">
-        Date: {group.date ? group.date.toLocaleDateString() : 'Unknown'}
-      </Typography>
-      <Typography variant="body1">Time: {group.startTime}</Typography>
-      <Typography variant="body1">
-        Seats Available: {group.seatsAvailable}
-      </Typography>
-      <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate('/')}
-        >
-          Back to Groups
-        </Button>
-        <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
-          Leave Group
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setChatOpen(!chatOpen)}
-        >
-          {chatOpen ? 'Hide Chat' : 'Show Chat'}
-        </Button>
-      </div>
-      
-      {chatOpen && (
-        <div className="chat-container">
-          {user ? (
-            <CardChat user={user} groupId={groupId} className={"chat"} />
-          ) : (
-            <p>Please log in to chat.</p>
-          )}
+        <div id = "content">
+          <div id="map" style={{width: '100%', margin: '1rem 0'}}></div>
+          <div id="sidebar"></div>
         </div>
-      )}
+        <div id="panels">
+        <div id="left-panel">
+
+        <Typography variant="h4" component="h1">
+          {group.destination}
+        </Typography>
+        <Typography variant="body1">Owner: {group.owner}</Typography>
+        <Typography variant="body1">Start Point: {group.startPoint}</Typography>
+        <Typography variant="body1">
+          Date: {group.date ? group.date.toLocaleDateString() : 'Unknown'}
+        </Typography>
+        <Typography variant="body1">Time: {group.startTime}</Typography>
+        <Typography variant="body1">
+          Seats Available: {group.seatsAvailable}
+        </Typography>
+        <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate('/')}
+          >
+            Back to Groups
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleLeaveGroup}>
+            Leave Group
+          </Button>
+        </div>
+        </div>
+      
+        <div id="right-panel">
+          <div className="chat-container">
+            {user ? (
+              <CardChat user={user} groupId={groupId} className={"chat"} />
+            ) : (
+              <p>Please log in to chat.</p>
+            )}
+          </div>
+        </div>
+        </div>
     </Container>
   );
 };
