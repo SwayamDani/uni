@@ -4,7 +4,7 @@ import { auth, db } from '../firebase'; // Import the Firestore instance directl
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
-import './Cards.css'; // Reuse the same CSS
+import './MyGroups.css'; // Reuse the same CSS
 
 const MyGroups = ({ handleButtonClick, buttonDisabled, buttonText }) => {
   const [userGroups, setUserGroups] = useState([]);

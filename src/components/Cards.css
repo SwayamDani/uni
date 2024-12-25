@@ -5,7 +5,7 @@
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: visible;
+  overflow: hidden;
   position: relative;
   color: #333;
   display: flex;
@@ -84,6 +84,7 @@
   position: relative;
   flex-wrap: wrap;
   justify-content: center;
+  overflow: visible;
 }
 
 .card {
@@ -237,7 +238,7 @@
 @media (max-width: 480px) {
   .filter-sort-container {
     left : 28%;
-    top : 45%;
+    top : 20%;
     width: 80%;
     margin: 20%;
   }
